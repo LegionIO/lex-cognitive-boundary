@@ -7,11 +7,9 @@ module Legion
         module CognitiveBoundary
           include Helpers::Constants
 
-          if defined?(Legion::Extensions::Helpers::Lex)
-            include Legion::Extensions::Helpers::Lex
-          end
+          include Legion::Extensions::Helpers::Lex if defined?(Legion::Extensions::Helpers::Lex)
 
-          def create_boundary(engine: nil, name:, boundary_type: :cognitive,
+          def create_boundary(name:, engine: nil, boundary_type: :cognitive,
                               permeability: DEFAULT_PERMEABILITY, **)
             eng = engine || default_engine
             boundary = eng.create_boundary(name: name, boundary_type: boundary_type,
@@ -19,7 +17,7 @@ module Legion
             { success: true, boundary: boundary.to_h }
           end
 
-          def open_boundary(engine: nil, boundary_id:, amount: PERMEABILITY_BOOST, **)
+          def open_boundary(boundary_id:, engine: nil, amount: PERMEABILITY_BOOST, **)
             eng = engine || default_engine
             result = eng.open_boundary(boundary_id: boundary_id, amount: amount)
             return { success: false, error: 'boundary not found' } unless result
@@ -27,7 +25,7 @@ module Legion
             { success: true, boundary: result.to_h }
           end
 
-          def close_boundary(engine: nil, boundary_id:, amount: PERMEABILITY_BOOST, **)
+          def close_boundary(boundary_id:, engine: nil, amount: PERMEABILITY_BOOST, **)
             eng = engine || default_engine
             result = eng.close_boundary(boundary_id: boundary_id, amount: amount)
             return { success: false, error: 'boundary not found' } unless result
@@ -35,7 +33,7 @@ module Legion
             { success: true, boundary: result.to_h }
           end
 
-          def violate_boundary(engine: nil, boundary_id:, **)
+          def violate_boundary(boundary_id:, engine: nil, **)
             eng = engine || default_engine
             result = eng.violate_boundary(boundary_id: boundary_id)
             return { success: false, error: 'boundary not found' } unless result
@@ -43,7 +41,7 @@ module Legion
             { success: true, boundary: result.to_h }
           end
 
-          def repair_boundary(engine: nil, boundary_id:, **)
+          def repair_boundary(boundary_id:, engine: nil, **)
             eng = engine || default_engine
             result = eng.repair_boundary(boundary_id: boundary_id)
             return { success: false, error: 'boundary not found' } unless result
@@ -51,7 +49,7 @@ module Legion
             { success: true, boundary: result.to_h }
           end
 
-          def seal_boundary(engine: nil, boundary_id:, **)
+          def seal_boundary(boundary_id:, engine: nil, **)
             eng = engine || default_engine
             result = eng.seal_boundary(boundary_id: boundary_id)
             return { success: false, error: 'boundary not found' } unless result
@@ -65,7 +63,7 @@ module Legion
             { success: true, breached: breached, count: breached.size }
           end
 
-          def boundaries_by_type(engine: nil, boundary_type:, **)
+          def boundaries_by_type(boundary_type:, engine: nil, **)
             eng = engine || default_engine
             boundaries = eng.boundaries_by_type(boundary_type: boundary_type).map(&:to_h)
             { success: true, boundaries: boundaries, count: boundaries.size }

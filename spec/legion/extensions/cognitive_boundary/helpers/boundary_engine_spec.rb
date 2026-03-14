@@ -94,7 +94,7 @@ RSpec.describe Legion::Extensions::CognitiveBoundary::Helpers::BoundaryEngine do
       b1 = engine.create_boundary(name: 'b1')
       b2 = engine.create_boundary(name: 'b2')
       3.times { engine.violate_boundary(boundary_id: b1.id) }
-      1.times { engine.violate_boundary(boundary_id: b2.id) }
+      engine.violate_boundary(boundary_id: b2.id)
       most = engine.most_violated(limit: 2)
       expect(most.first.id).to eq(b1.id)
     end
@@ -152,7 +152,7 @@ RSpec.describe Legion::Extensions::CognitiveBoundary::Helpers::BoundaryEngine do
     it 'prunes least violated when limit reached' do
       stub_const('Legion::Extensions::CognitiveBoundary::Helpers::Constants::MAX_BOUNDARIES', 3)
       eng = described_class.new
-      b1 = eng.create_boundary(name: 'b1')
+      eng.create_boundary(name: 'b1')
       b2 = eng.create_boundary(name: 'b2')
       eng.violate_boundary(boundary_id: b2.id)
       b3 = eng.create_boundary(name: 'b3')

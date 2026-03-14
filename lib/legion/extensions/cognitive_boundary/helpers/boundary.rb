@@ -67,16 +67,16 @@ module Legion
 
           def to_h
             {
-              id:                  @id,
-              name:                @name,
-              boundary_type:       @boundary_type,
-              permeability:        @permeability,
-              permeability_label:  permeability_label,
-              integrity:           integrity,
-              integrity_label:     integrity_label,
-              breached:            breached?,
-              violations:          @violations,
-              created_at:          @created_at
+              id:                 @id,
+              name:               @name,
+              boundary_type:      @boundary_type,
+              permeability:       @permeability,
+              permeability_label: permeability_label,
+              integrity:          integrity,
+              integrity_label:    integrity_label,
+              breached:           breached?,
+              violations:         @violations,
+              created_at:         @created_at
             }
           end
         end
